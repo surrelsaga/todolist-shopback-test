@@ -1,15 +1,16 @@
 const KEY = 'todolist.v1'
 
-const EMPTY = { tasks: [], categories: [] }
+const EMPTY = { tasks: [], categories: [], trash: [] }
 
 // Anything could be sitting in localStorage: absent, half-written, edited by hand,
 // or written by an older version. Never let it crash the app — fall back to empty.
 export function parseState(raw) {
   try {
-    const { tasks, categories } = JSON.parse(raw) ?? {}
+    const { tasks, categories, trash } = JSON.parse(raw) ?? {}
     return {
       tasks: Array.isArray(tasks) ? tasks : [],
       categories: Array.isArray(categories) ? categories : [],
+      trash: Array.isArray(trash) ? trash : [],
     }
   } catch {
     return { ...EMPTY }

@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict'
 import { parseState } from './storage.js'
 
-const EMPTY = { tasks: [], categories: [] }
+const EMPTY = { tasks: [], categories: [], trash: [] }
 
 // Nothing stored yet.
 assert.deepEqual(parseState(null), EMPTY)
@@ -25,7 +25,21 @@ const state = {
     },
   ],
   categories: [{ id: 'c1', name: 'Chores' }],
+  trash: [
+    {
+      id: 'b',
+      title: 'Regret',
+      description: '',
+      status: 'incomplete',
+      categoryId: 'c1',
+      createdAt: '2026-08-30T00:00:00.000Z',
+      deletedAt: '2026-09-01T00:00:00.000Z',
+    },
+  ],
 }
 assert.deepEqual(parseState(JSON.stringify(state)), state)
+
+// A blob written before the trash bin existed still loads, with an empty bin.
+assert.deepEqual(parseState('{"tasks":[],"categories":[]}'), EMPTY)
 
 console.log('storage: ok')

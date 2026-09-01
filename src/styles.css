@@ -119,8 +119,15 @@ body {
   border-radius: 999px;
 }
 
-.pill-btn:hover { background: var(--line); }
+.pill-btn:hover:not(:disabled) { background: var(--line); }
 .pill-btn.active { background: var(--pop-2); border-color: var(--ink); }
+.pill-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pill-btn.push { margin-left: auto; }
+.pill-btn.danger { color: #d7263d; border-color: currentColor; }
+.pill-btn .count { margin-left: 0.15rem; }
+
+.task.trashed { background: #fdf6f6; border-style: dashed; opacity: 0.85; }
+.task.trashed .title { text-decoration: line-through; opacity: 0.6; }
 
 .nav-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.15rem; }
 

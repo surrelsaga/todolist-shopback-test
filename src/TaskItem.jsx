@@ -113,8 +113,8 @@ export default function TaskItem({ task, categories, onToggle, onSave, onDelete 
         <button className="btn ghost" onClick={startEditing} title="Edit">
           ✏️
         </button>
-        <button className="btn ghost" onClick={onDelete} title="Delete forever">
-          💀
+        <button className="btn ghost" onClick={onDelete} title="Move to bin">
+          🗑️
         </button>
       </div>
     </li>

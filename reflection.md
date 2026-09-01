@@ -26,10 +26,12 @@ In most of every building steps: I intentionally did not delete the final review
 
 For some simple testing, I will do test on my own so token usage is optimized.
 
+App Design decision: delete the category will bring all the tasks into the trash bin also. Before, if the category is deleted, all of its todo will fall under 'Strays' (no category). the todo items when it's deleted will still remember the category, and if it's restored from trash bin, it checks for the old category, if exist then go back there, if not then go to 'strays'
+
+=> this stuffs is related to the user experience and what they need. I think design 
+
 
 
 **4. What would you do differently with more time?**
 
-I was focusing abit too much on improving the UI and waste some time. Should have focus finish all the basic functionality all the way first then improve the UI
-Add searching engine
-todos are draggable
+I was focusing abit too much on improving the UI UX and waste some time. Should have focus finish all the basic functionality all the way first then improve the app.
