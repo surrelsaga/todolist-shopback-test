@@ -1,0 +1,39 @@
+INITIAL PLANNING
+
+Tech stack: react + localStorage (can add if doesn't fit the feature)
+
+About the app:
+- UI: A simple but funny, playful
+
+* Features:
+- add, edit, delete task
+- mark complete/incomplete
+- tasks can be grouped under categories
+    + categories are managed by user: create, rename, delete
+    + task can also be left ungrouped
+- persistence: localStorage
+- filter: by duedates => optional, not every task have
+- undo: 
+    + deleted task will ends up in a trash bin first, 
+    + trash items stay until user restores them or click "empty" (manual)
+    + build this feature last, only after basic operations are solid
+
+* Data model:
+- A task has: 
+ID, title, description box, status (complete/incomplete), 
+due dates(optional), category(optional), create data (for sorting), deleted date (set when move to trash)
+
+- Persistence:
++ read from localStorage to rebuild task
++ data is stored as json. the shape will be category -> task 
++ trash items are stored separately in the same JSON
+
+- Non goals: no backend, no auth, no multi-user
+
+- Build order:
+1. add / edit / delete / mark complete
+2. add 'catergory'
+3. localstorage persistence
+4. due date filter
+5. trash bin / undo delete
+
