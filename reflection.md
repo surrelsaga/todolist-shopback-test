@@ -1,37 +1,32 @@
 **1. How did I break down the problem before prompting?**
 
-I will need to decide how I want the app to works. Specifically, what features I want to have in mind, write it out. After that, I will decide the technical stuffs like tech stack (using a database or not, or need to build backend or not).
+First I decided how I wanted the app to work: the features I wanted, written out, then the technical side like tech stack, whether it needed a database or a backend at all (it didn't).
 
-After I got a clear idea of how the app works, I will set up a building plan. What features to implement first, what needs to be done before the others.
+Once the app was clear in my head, I turned that into a build plan: what to implement first, and what had to exist before something else could be built on top of it.
 
-Then, I will start building one feature at a time. I will do some testings to see if it works, only if it does work as I expect, I will see if I want to improve the UX or the feature and iterate until I got it. If it's already good enough, I will move on
+Then I built one feature at a time. Implement, test it myself, and only once it worked as expected would I look at whether the feature or the UX could be better. Iterate until it's good enough, then move on to the next one.
 
-**2. What did the AI get wrong, and how do you fix it?**
+**2. What did the AI get wrong, and how did I fix it?**
 
-Checkpoint 1: When I told it to rearrange the overall UI, it broke the add 'category' feature. I noticed the issue while testing if the implemented basic functionality still exists. I then asked AI to investigate the issue, reviewed its explanation and iterate until the original feature worked again while keeping the UI improvement. 
+**Checkpoint 1 — rearranging the UI broke "add category".** I caught it by testing whether the existing basic functionality still worked after the change. I asked the AI to investigate, read its explanation, and iterated until the original feature was working again *and* the UI improvement was kept.
 
-Checkpoint 2: Adding 'due-date filter' feature. The category that doesn't have any todo that falls under a specific filter (e.g: 'Overdue') would still show up with no todos inside. Preferably, it shouldn't show up. so did the same thing investigate,...
+**Checkpoint 2 — the due-date filter.** A category with no task matching the active filter (e.g. "overdue") still showed up, just empty. It should disappear entirely. Same approach: reproduce it, hand it over to investigate, review, iterate.
 
-**3. What did you deliberately not delegate to AI, and why?**
+Overall: the pattern was that when the AI improves the UI/UX, it can unintentionally break core functionality. So I always test first to confirm the issue is real, then ask it to investigate, review the explanation, and iterate until the feature is back without losing the improvement.
 
-Testing, and making decisions about how to improve UI, UX or fix a bugs. AI can fix the bug. But reviewing and testing I won't let AI do 100%, I need to test to see if any improvement need to be made or any possible bugs.
+**3. What did I deliberately not delegate to the AI?**
 
-Checkpoint 1: When I'm done with my step 2 adding the 'category' features to group todo tasks. I realized the UI was like, the todos are added below the form to create categories and todos. User will have to scroll down a lot to see all the todos which is not convenient, especially when there might be a lot of todos.
+Testing, and the decisions about UX and design.
 
-Checkpoint 2
+The AI can fix bugs and write tests, and it did both well. But I didn't hand over the final review and validation at any step. A change can look correct in isolation and still quietly break something that already worked, so I verified the app myself after every step and especially the features that existed before the change. For the simpler checks I tested on my own rather than asking the AI to, which also kept token usage down.
 
-In most of every building steps: I intentionally did not delete the final review and validation to AI. although AI was able to implement most of the features effectively and writing tests to check if it working. I wanted to personally verify that the application still behave as expected, especially the features that existed before my changes.
-=> reason: AI can make changes that look correct in isolation but might unintentionally affect existing functionality
+Design decisions I kept for the same reason, but a different one underneath: they're not about which behaviour is *correct*, they're about which one is convenient for the user. Two examples:
 
+- **Layout.** After adding categories, the todos rendered below the forms, so the user had to scroll a long way to see them all which worse if there are more todos. I decided the forms belonged in a sidebar with the list beside them, and told the AI what to build.
+- **Deleting a category.** Originally its todos fell into "Strays" (no category). I changed it: deleting a category sends its todos to the trash bin instead, and a deleted todo remembers the category it came from. On restore it goes back to that category if it still exists, and only falls back to Strays if it doesn't.
 
-For some simple testing, I will do test on my own so token usage is optimized.
+So: the AI implements and tests, I brainstorm the design and own the final review.
 
-App Design decision: delete the category will bring all the tasks into the trash bin also. Before, if the category is deleted, all of its todo will fall under 'Strays' (no category). the todo items when it's deleted will still remember the category, and if it's restored from trash bin, it checks for the old category, if exist then go back there, if not then go to 'strays'
+**4. What would I do differently with more time?**
 
-=> this stuffs is related to the user experience and what they need. I think design 
-
-
-
-**4. What would you do differently with more time?**
-
-I was focusing abit too much on improving the UI UX and waste some time. Should have focus finish all the basic functionality all the way first then improve the app.
+I followed an iterative workflow: implement with AI, test, review, fix, then move on. With more time I'd make it more systematic: broader test coverage, and a deeper review of AI-generated changes, particularly where they touch functionality that already exists.
