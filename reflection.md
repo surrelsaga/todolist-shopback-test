@@ -10,11 +10,21 @@ Then, I will start building one feature at a time. I will do some testings to se
 
 Checkpoint 1: When I told it to rearrange the overall UI, it broke the add 'category' feature. I noticed the issue while testing if the implemented basic functionality still exists. I then asked AI to investigate the issue, reviewed its explanation and iterate until the original feature worked again while keeping the UI improvement. 
 
+Checkpoint 2: Adding 'due-date filter' feature. The category that doesn't have any todo that falls under a specific filter (e.g: 'Overdue') would still show up with no todos inside. Preferably, it shouldn't show up. so did the same thing investigate,...
+
 **3. What did you deliberately not delegate to AI, and why?**
 
 Testing, and making decisions about how to improve UI, UX or fix a bugs. AI can fix the bug. But reviewing and testing I won't let AI do 100%, I need to test to see if any improvement need to be made or any possible bugs.
 
 Checkpoint 1: When I'm done with my step 2 adding the 'category' features to group todo tasks. I realized the UI was like, the todos are added below the form to create categories and todos. User will have to scroll down a lot to see all the todos which is not convenient, especially when there might be a lot of todos.
+
+Checkpoint 2
+
+In most of every building steps: I intentionally did not delete the final review and validation to AI. although AI was able to implement most of the features effectively and writing tests to check if it working. I wanted to personally verify that the application still behave as expected, especially the features that existed before my changes.
+=> reason: AI can make changes that look correct in isolation but might unintentionally affect existing functionality
+
+
+For some simple testing, I will do test on my own so token usage is optimized.
 
 
 

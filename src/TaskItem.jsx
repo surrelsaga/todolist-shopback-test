@@ -1,16 +1,19 @@
 import { useState } from 'react'
 import { NO_CATEGORY_OPTION } from './constants.js'
+import { isOverdue } from './dates.js'
 
 export default function TaskItem({ task, categories, onToggle, onSave, onDelete }) {
   const [editing, setEditing] = useState(false)
   const [title, setTitle] = useState(task.title)
   const [description, setDescription] = useState(task.description)
   const [categoryId, setCategoryId] = useState(task.categoryId ?? '')
+  const [dueDate, setDueDate] = useState(task.dueDate ?? '')
 
   function startEditing() {
     setTitle(task.title)
     setDescription(task.description)
     setCategoryId(task.categoryId ?? '')
+    setDueDate(task.dueDate ?? '')
     setEditing(true)
   }
 
@@ -18,7 +21,12 @@ export default function TaskItem({ task, categories, onToggle, onSave, onDelete 
     e.preventDefault()
     const trimmed = title.trim()
     if (!trimmed) return
-    onSave({ title: trimmed, description: description.trim(), categoryId: categoryId || null })
+    onSave({
+      title: trimmed,
+      description: description.trim(),
+      categoryId: categoryId || null,
+      dueDate: dueDate || null,
+    })
     setEditing(false)
   }
 
@@ -40,6 +48,15 @@ export default function TaskItem({ task, categories, onToggle, onSave, onDelete 
             placeholder="Details (optional)"
             aria-label="Edit description"
           />
+          <label className="field">
+            <span>Due</span>
+            <input
+              className="input"
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            />
+          </label>
           <div className="row-actions">
             <select
               className="input select"
@@ -80,6 +97,12 @@ export default function TaskItem({ task, categories, onToggle, onSave, onDelete 
         {task.description && <p className="desc">{task.description}</p>}
         <p className="meta">
           <span className={done ? 'pill done-pill' : 'pill'}>{done ? 'done' : 'to do'}</span>
+          {task.dueDate && (
+            <span className={isOverdue(task) ? 'pill late-pill' : 'pill due-pill'}>
+              {isOverdue(task) ? '🔥 was due ' : 'due '}
+              {task.dueDate}
+            </span>
+          )}
           <time dateTime={task.createdAt}>
             added {new Date(task.createdAt).toLocaleString()}
           </time>

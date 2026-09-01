@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import TaskItem from './TaskItem.jsx'
 import { UNGROUPED, NO_CATEGORY_OPTION } from './constants.js'
 import { loadState, saveState } from './storage.js'
+import { DUE_FILTERS, matchesDue } from './dates.js'
+import { buildGroups, ALL } from './groups.js'
 
 const EMPTY_LINE = 'Nothing here. Suspiciously peaceful.'
-const ALL = 'all'
 const saved = loadState()
 
 export default function App() {
@@ -13,8 +14,10 @@ export default function App() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [categoryId, setCategoryId] = useState('')
+  const [dueDate, setDueDate] = useState('')
   const [newCategory, setNewCategory] = useState('')
   const [filter, setFilter] = useState(ALL)
+  const [dueFilter, setDueFilter] = useState('any')
 
   useEffect(() => {
     saveState({ tasks, categories })
@@ -31,12 +34,14 @@ export default function App() {
         description: description.trim(),
         status: 'incomplete',
         categoryId: categoryId || null,
+        dueDate: dueDate || null,
         createdAt: new Date().toISOString(),
       },
       ...tasks,
     ])
     setTitle('')
     setDescription('')
+    setDueDate('')
   }
 
   function updateTask(id, changes) {
@@ -82,9 +87,10 @@ export default function App() {
   }
 
   const done = tasks.filter((t) => t.status === 'complete').length
-  const countIn = (id) => tasks.filter((t) => t.categoryId === id).length
-  const groups = [...categories, UNGROUPED]
-  const shownGroups = filter === ALL ? groups : groups.filter((g) => g.id === filter)
+  // The due filter narrows everything downstream, sidebar counts included.
+  const visible = tasks.filter((t) => matchesDue(t, dueFilter))
+  const countIn = (id) => visible.filter((t) => t.categoryId === id).length
+  const shownGroups = buildGroups(categories, tasks, { filter, dueFilter })
 
   return (
     <div className="app">
@@ -129,6 +135,15 @@ export default function App() {
               </option>
             ))}
           </select>
+          <label className="field">
+            <span>Due (optional)</span>
+            <input
+              className="input"
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            />
+          </label>
           <button className="btn add-btn" type="submit" disabled={!title.trim()}>
             Add it
           </button>
@@ -194,12 +209,26 @@ export default function App() {
       </aside>
 
       <main className="content">
+        <div className="toolbar">
+          <span className="toolbar-label">Due</span>
+          {DUE_FILTERS.map(([value, label]) => (
+            <button
+              key={value}
+              className={dueFilter === value ? 'pill-btn active' : 'pill-btn'}
+              onClick={() => setDueFilter(value)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
         {tasks.length === 0 ? (
           <p className="empty">{EMPTY_LINE}</p>
+        ) : shownGroups.length === 0 ? (
+          <p className="empty">Nothing due in that window. Lucky you.</p>
         ) : (
           shownGroups.map((group) => {
-            const groupTasks = tasks.filter((t) => t.categoryId === group.id)
-            if (filter === ALL && group.id === null && groupTasks.length === 0) return null
+            const groupTasks = group.tasks
             return (
               <section className="group" key={group.id ?? 'ungrouped'}>
                 <h2 className="group-title">

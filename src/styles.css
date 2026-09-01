@@ -78,6 +78,50 @@ body {
 
 .cat-form { display: flex; gap: 0.5rem; }
 
+.field { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; opacity: 0.75; }
+.field .input { width: auto; flex: 1; min-width: 0; }
+
+/* Sits above the tasks and stays put while the list scrolls. */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  padding: 0.6rem 0.8rem;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--pop-2);
+}
+
+.toolbar-label {
+  margin-right: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+}
+
+.pill-btn {
+  padding: 0.2rem 0.6rem;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+  background: transparent;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+}
+
+.pill-btn:hover { background: var(--line); }
+.pill-btn.active { background: var(--pop-2); border-color: var(--ink); }
+
 .nav-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.15rem; }
 
 .nav-row { display: flex; align-items: center; gap: 0.1rem; }
@@ -253,3 +297,5 @@ body {
 }
 
 .done-pill { color: var(--mint); opacity: 1; }
+.due-pill { opacity: 1; }
+.late-pill { color: #d7263d; opacity: 1; font-weight: 800; }
