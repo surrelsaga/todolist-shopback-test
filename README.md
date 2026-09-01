@@ -2,7 +2,7 @@
 
 A playful to-do app with categories, due dates and a restorable bin.
 
-**Live demo:** _<!-- TODO: GitHub Pages link -->_
+**Live demo:** https://surrelsaga.github.io/todolist-shopback-test/
 
 ## Project structure
 
