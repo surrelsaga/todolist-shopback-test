@@ -28,7 +28,7 @@ due dates(optional), category(optional), create data (for sorting), deleted date
 + data is stored as json. the shape will be category -> task 
 + trash items are stored separately in the same JSON
 
-- Non goals: no backend, no auth, no multi-user
+- Non goals: no backend, no a`uth, no multi-user
 
 - Build order:
 1. add / edit / delete / mark complete
