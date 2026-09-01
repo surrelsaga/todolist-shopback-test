@@ -1,18 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TaskItem from './TaskItem.jsx'
 import { UNGROUPED, NO_CATEGORY_OPTION } from './constants.js'
+import { loadState, saveState } from './storage.js'
 
 const EMPTY_LINE = 'Nothing here. Suspiciously peaceful.'
 const ALL = 'all'
+const saved = loadState()
 
 export default function App() {
-  const [tasks, setTasks] = useState([])
-  const [categories, setCategories] = useState([])
+  const [tasks, setTasks] = useState(saved.tasks)
+  const [categories, setCategories] = useState(saved.categories)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [newCategory, setNewCategory] = useState('')
   const [filter, setFilter] = useState(ALL)
+
+  useEffect(() => {
+    saveState({ tasks, categories })
+  }, [tasks, categories])
 
   function addTask(e) {
     e.preventDefault()

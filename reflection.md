@@ -16,6 +16,8 @@ Testing, and making decisions about how to improve UI, UX or fix a bugs. AI can 
 
 Checkpoint 1: When I'm done with my step 2 adding the 'category' features to group todo tasks. I realized the UI was like, the todos are added below the form to create categories and todos. User will have to scroll down a lot to see all the todos which is not convenient, especially when there might be a lot of todos.
 
+
+
 **4. What would you do differently with more time?**
 
 I was focusing abit too much on improving the UI and waste some time. Should have focus finish all the basic functionality all the way first then improve the UI
